@@ -6,3 +6,15 @@ html,
 body {
   height: 100%;
 }
+
+@keyframes loading {
+  0% {
+    content: ".";
+  }
+  50% {
+    content: "...";
+  }
+  100% {
+    content: ".....";
+  }
+}

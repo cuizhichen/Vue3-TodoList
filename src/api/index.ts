@@ -18,7 +18,7 @@ const db: {
 // const json = (val: unknown) => JSON.parse(JSON.stringify(val));
 
 const proxy = (cb: () => void) => {
-  setTimeout(cb, 300);
+  setTimeout(cb, 200);
 };
 
 export const getTodo = () =>

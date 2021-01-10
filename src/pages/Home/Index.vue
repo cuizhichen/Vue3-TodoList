@@ -24,7 +24,7 @@
                 @onTodoDeleted="createArchive(i)"
               />
             </template>
-            <div v-else>empty</div>
+            <div v-else>Empty.</div>
           </div>
         </section>
         <section class="right">

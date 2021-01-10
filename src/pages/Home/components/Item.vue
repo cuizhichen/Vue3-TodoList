@@ -1,5 +1,10 @@
 <template>
-  <div class="item">
+  <div
+    :class="[
+      'item',
+      (deleteTodoLoading || deleteArchiveLoading || isDelted) && 'deleting'
+    ]"
+  >
     <div class="left">
       <div class="title" :title="item.title">{{ item.title }}</div>
       <div class="create-time">
@@ -15,6 +20,14 @@
         删
       </span>
     </div>
+    <div
+      class="delete-mask"
+      v-if="deleteTodoLoading || deleteArchiveLoading || isDelted"
+    >
+      <span class="inner-text">
+        {{ isTodo ? "归档待办项中" : "删除待办项中" }}
+      </span>
+    </div>
   </div>
 </template>
 
@@ -25,7 +38,7 @@ import {
   deleteTodo as deleteTodoApi,
   deleteArchive as deleteArchiveApi
 } from "@/api";
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 
 export default defineComponent({
   props: {
@@ -40,14 +53,33 @@ export default defineComponent({
   },
   emits: ["onTodoDeleted", "onArchiveDeleted"],
   setup(props, { emit }) {
-    const [deleteTodo] = useMutation(deleteTodoApi, {
-      onComplated: () => emit("onTodoDeleted")
-    });
-    const [deleteArchive] = useMutation(deleteArchiveApi, {
-      onComplated: () => emit("onArchiveDeleted")
-    });
+    const isDelted = ref(false);
+    const [deleteTodo, { loading: deleteTodoLoading }] = useMutation(
+      deleteTodoApi,
+      {
+        onComplated: () => {
+          isDelted.value = true;
+          emit("onTodoDeleted");
+        }
+      }
+    );
+    const [deleteArchive, { loading: deleteArchiveLoading }] = useMutation(
+      deleteArchiveApi,
+      {
+        onComplated: () => {
+          isDelted.value = true;
+          emit("onArchiveDeleted");
+        }
+      }
+    );
 
-    return { deleteTodo, deleteArchive };
+    return {
+      deleteTodo,
+      deleteTodoLoading,
+      deleteArchive,
+      deleteArchiveLoading,
+      isDelted
+    };
   }
 });
 </script>
@@ -58,8 +90,9 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
 
-  &:hover {
+  &:not(.deleting):hover {
     background: #dbdefd;
   }
 
@@ -111,6 +144,27 @@ export default defineComponent({
       &:hover {
         border-color: red;
         color: red;
+      }
+    }
+  }
+
+  .delete-mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(red, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #b30000;
+    .inner-text {
+      &:after {
+        position: absolute;
+        content: "";
+        animation: loading 150ms infinite alternate-reverse;
       }
     }
   }
