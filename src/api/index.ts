@@ -74,3 +74,22 @@ export const deleteArchive = (id: number) =>
       r({ status: true });
     });
   });
+
+export const backArchive = (id: number) =>
+  new Promise<{ status: true }>(r => {
+    proxy(() => {
+      db.archive = db.archive.filter(r => {
+        if (r.id === id) {
+          db.todo.unshift({
+            id: r.sourceId,
+            title: r.title,
+            createTime: r.createTime
+          });
+          return false;
+        }
+        return true;
+      });
+
+      r({ status: true });
+    });
+  });

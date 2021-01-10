@@ -44,6 +44,7 @@
                 :item="i"
                 :isTodo="false"
                 @onArchiveDeleted="refetch"
+                @onBackArchive="refetch"
               />
             </template>
             <div v-else>Empty.</div>
