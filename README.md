@@ -1,24 +1,8 @@
 # vue3-todolist
 
-## Project setup
-```
-npm install
-```
+> 基于 Vue3 + Typescript + CompositionApi 实现的 TodoList
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+等作者有空了再写 README.md
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+演示图片
+![演示图片](./src/assets/demo.jpg)
