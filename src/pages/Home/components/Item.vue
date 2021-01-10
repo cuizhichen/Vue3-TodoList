@@ -11,7 +11,7 @@
       <input
         class="edit-input"
         type="text"
-        v-focusx
+        v-focus
         v-if="isEditing"
         :value="item.title"
         ref="editInput"
@@ -96,15 +96,7 @@ export default defineComponent({
     const editInput = ref<HTMLInputElement>();
 
     const [updateTodo, { loading: updateTodoLoading }] = useMutation(
-      updateTodoApi,
-      {
-        onComplated: () => {
-          if (item?.value && editInput.value) {
-            isEditing.value = false;
-            item.value.title = editInput.value.value;
-          }
-        }
-      }
+      updateTodoApi
     );
     const [backArchive, { loading: backArchiveLoading }] = useMutation(
       backArchiveApi,
@@ -147,6 +139,8 @@ export default defineComponent({
           return;
         }
         updateTodo(item.value.id, newValue);
+        isEditing.value = false;
+        item.value.title = newValue;
       } else {
         console.error("异常错误");
         alert("待办项标题不可为空");

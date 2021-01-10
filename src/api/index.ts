@@ -11,7 +11,7 @@ const db: {
     { id: 1, title: "小郡肝串串 🍢", createTime: 1610182276778 },
     { id: 2, title: "学会 Vue3.0 😎", createTime: 1610182286778 }
   ],
-  archiveId: 0,
+  archiveId: 1,
   archive: [
     {
       id: 1,
