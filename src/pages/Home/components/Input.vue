@@ -1,6 +1,6 @@
 <template>
   <form class="input-container" @submit.prevent="onSubmit">
-    <input placeholder="记录点什么吧。" ref="input" />
+    <input placeholder="记录点什么吧。" ref="input" v-focus />
     <div :class="['recording', !loading && 'hide']">记录中...</div>
   </form>
 </template>

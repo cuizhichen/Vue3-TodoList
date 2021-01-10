@@ -25,21 +25,21 @@ export const useQuery = <T>(promise: () => Promise<T>) => {
   return { loading, data, error, refetch: exec };
 };
 
-export const useMutation: <V, T>(
-  promise: (variables: V) => Promise<T>,
+export const useMutation: <V extends unknown[], T>(
+  promise: (...restParams: V) => Promise<T>,
   options?: {
     onComplated?: (data: T) => void;
     onError?: (err: string) => void;
     onFinally?: () => void;
   }
 ) => [
-  (params: V) => void,
+  (...params: V) => void,
   {
     loading: Ref<boolean>;
     error: Ref<string | undefined>;
   }
-] = <V, T>(
-  promise: (variables: V) => Promise<T>,
+] = <V extends unknown[], T>(
+  promise: (...restParams: V) => Promise<T>,
   options?: {
     onComplated?: (data: T) => void;
     onError?: (err: string) => void;
@@ -49,9 +49,9 @@ export const useMutation: <V, T>(
   const loading = ref(false);
   const error = ref<string>();
 
-  const trigger = (params: V) => {
+  const trigger = (...restParams: V) => {
     loading.value = true;
-    promise(params)
+    promise(...restParams)
       .then(res => {
         options?.onComplated?.(res);
       })

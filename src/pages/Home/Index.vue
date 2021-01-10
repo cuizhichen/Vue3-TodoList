@@ -109,7 +109,7 @@ export default defineComponent({
     font-size: 18px;
     font-weight: 300;
     color: #aaa;
-    margin-bottom: 70px;
+    margin-bottom: 50px;
   }
   .content {
     display: flex;

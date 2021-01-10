@@ -12,13 +12,18 @@ const db: {
     { id: 2, title: "学会 Vue3.0 😎", createTime: 1610182286778 }
   ],
   archiveId: 0,
-  archive: []
+  archive: [
+    {
+      id: 1,
+      sourceId: 3,
+      title: "Docker 从入门到放弃 😒",
+      createTime: 1610182176778
+    }
+  ]
 };
 
-// const json = (val: unknown) => JSON.parse(JSON.stringify(val));
-
-const proxy = (cb: () => void) => {
-  setTimeout(cb, 200);
+const proxy = (cb: () => void, timeout = 200) => {
+  setTimeout(cb, timeout);
 };
 
 export const getTodo = () =>
@@ -34,6 +39,14 @@ export const createTodo = (title: string) =>
     });
   });
 
+export const updateTodo = (id: number, value: string) =>
+  new Promise<{ status: true }>(r => {
+    proxy(() => {
+      db.todo = db.todo.map(i => (i.id === id ? { ...i, value } : i));
+      r({ status: true });
+    }, 400);
+  });
+
 export const deleteTodo = (id: number) =>
   new Promise<{ status: true }>(r => {
     proxy(() => {
@@ -47,7 +60,7 @@ export const createArchive = (archive: TodoItem) =>
     proxy(() => {
       db.archive.unshift({
         ...archive,
-        resourceId: archive.id,
+        sourceId: archive.id,
         id: ++db.archiveId
       });
       r({ status: true });

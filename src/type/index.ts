@@ -4,4 +4,4 @@ export type TodoItem = {
   createTime: number;
 };
 
-export type ArchiveItem = TodoItem & { resourceId: number };
+export type ArchiveItem = TodoItem & { sourceId: number };
