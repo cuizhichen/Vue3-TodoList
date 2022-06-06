@@ -57,14 +57,10 @@
       </span>
     </div>
     <div class="editing-mask" v-if="updateTodoLoading">
-      <span class="inner-text">
-        待办项更新中
-      </span>
+      <span class="inner-text"> 待办项更新中 </span>
     </div>
     <div class="backing-mask" v-if="backArchiveLoading || isBacked">
-      <span class="inner-text">
-        回档中
-      </span>
+      <span class="inner-text"> 回档中 </span>
     </div>
   </div>
 </template>
@@ -109,7 +105,7 @@ const useTodoItem = (props: Props, { emit }: { emit: Emit }) => {
   const [deleteTodo, { loading: deleteTodoLoading }] = useMutation(
     deleteTodoApi,
     {
-      onComplated: () => {
+      onCompleted: () => {
         isTodoDeleted.value = true;
         emit("onTodoDeleted");
       }
@@ -157,7 +153,7 @@ const useArchive = (props: Props, { emit }: { emit: Emit }) => {
   const [backArchive, { loading: backArchiveLoading }] = useMutation(
     backArchiveApi,
     {
-      onComplated: () => {
+      onCompleted: () => {
         isBacked.value = true;
         emit("onBackArchive");
       }
@@ -166,7 +162,7 @@ const useArchive = (props: Props, { emit }: { emit: Emit }) => {
   const [deleteArchive, { loading: deleteArchiveLoading }] = useMutation(
     deleteArchiveApi,
     {
-      onComplated: () => {
+      onCompleted: () => {
         isArchiveDeleted.value = true;
         emit("onArchiveDeleted");
       }

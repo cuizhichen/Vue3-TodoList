@@ -12,12 +12,12 @@ import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "Input",
-  emits: ["onComplated"],
-  setup(p: unknown, { emit }: { emit: (key: "onComplated") => void }) {
+  emits: ["onCompleted"],
+  setup(p: unknown, { emit }: { emit: (key: "onCompleted") => void }) {
     const input = ref<HTMLInputElement | null>(null);
     const [trigger, { loading }] = useMutation(createTodo, {
-      onComplated() {
-        emit("onComplated");
+      onCompleted() {
+        emit("onCompleted");
         if (input.value) {
           input.value.value = "";
         }

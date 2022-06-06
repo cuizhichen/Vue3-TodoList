@@ -4,9 +4,11 @@
     <div class="description">
       Todo. Todo. Todo. Todo. Todo. Todo. Todo..........
     </div>
-    <Input @onComplated="refetch" />
+    <Input @onCompleted="refetch" />
     <div class="content">
-      <div class="loading" v-if="loading">Loading....</div>
+      <div class="loading" v-if="loading">
+        <span class="loading-inner-text"> Loading </span>
+      </div>
       <template v-else>
         <section class="left">
           <div class="section-title">
@@ -29,9 +31,7 @@
         </section>
         <section class="right">
           <div class="section-title">
-            <span>
-              归档 👋
-            </span>
+            <span> 归档 👋 </span>
             <span v-if="archive.length" class="total">
               Total: {{ archive.length }}
             </span>
@@ -62,12 +62,6 @@ import Item from "./components/Item.vue";
 import { useMutation, useQuery } from "@/common/hooks";
 import { createArchive as createArchiveApi, getTodo } from "@/api";
 
-type TodoItem = {
-  id: number;
-  title: string;
-  createTime: number;
-};
-
 export default defineComponent({
   name: "Home",
   components: {
@@ -77,7 +71,7 @@ export default defineComponent({
   setup() {
     const { data, loading, refetch } = useQuery(getTodo);
     const [createArchive] = useMutation(createArchiveApi, {
-      onComplated: refetch
+      onCompleted: refetch
     });
     const todo = computed(() => data.value?.todo || []);
     const archive = computed(() => data.value?.archive || []);
@@ -125,6 +119,14 @@ export default defineComponent({
       display: flex;
       align-items: center;
       justify-content: center;
+
+      .loading-inner-text {
+        &:after {
+          position: absolute;
+          content: "";
+          animation: loading 600ms infinite;
+        }
+      }
     }
 
     .left,

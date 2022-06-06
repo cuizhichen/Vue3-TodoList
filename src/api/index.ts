@@ -22,7 +22,7 @@ const db: {
   ]
 };
 
-const proxy = (cb: () => void, timeout = 200) => {
+const proxy = (cb: () => void, timeout = 300) => {
   setTimeout(cb, timeout);
 };
 

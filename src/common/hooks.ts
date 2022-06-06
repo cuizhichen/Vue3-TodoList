@@ -28,7 +28,7 @@ export const useQuery = <T>(promise: () => Promise<T>) => {
 export const useMutation: <V extends unknown[], T>(
   promise: (...restParams: V) => Promise<T>,
   options?: {
-    onComplated?: (data: T) => void;
+    onCompleted?: (data: T) => void;
     onError?: (err: string) => void;
     onFinally?: () => void;
   }
@@ -41,7 +41,7 @@ export const useMutation: <V extends unknown[], T>(
 ] = <V extends unknown[], T>(
   promise: (...restParams: V) => Promise<T>,
   options?: {
-    onComplated?: (data: T) => void;
+    onCompleted?: (data: T) => void;
     onError?: (err: string) => void;
     onFinally?: () => void;
   }
@@ -53,7 +53,7 @@ export const useMutation: <V extends unknown[], T>(
     loading.value = true;
     promise(...restParams)
       .then(res => {
-        options?.onComplated?.(res);
+        options?.onCompleted?.(res);
       })
       .catch(err => {
         error.value = err;

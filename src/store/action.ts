@@ -7,14 +7,14 @@ function updateToken(state: State) {
 }
 
 function updateCode(state: State) {
-  return (code: any) => {
+  return (code: string) => {
     state.code = code;
     console.log(code);
   };
 }
 
 function updateUser(state: State) {
-  return (user: any) => {
+  return (user: string) => {
     state.user = user;
   };
 }

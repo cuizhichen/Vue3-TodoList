@@ -3,7 +3,7 @@ import { reactive } from "vue";
 export interface State {
   code: string;
   token: string;
-  user: any;
+  user: Record<string, unknown>;
 }
 
 export const State: State = {
