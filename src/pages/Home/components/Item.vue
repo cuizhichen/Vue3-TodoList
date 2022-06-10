@@ -74,7 +74,7 @@ import {
   updateTodo as updateTodoApi,
   backArchive as backArchiveApi
 } from "@/api";
-import { defineComponent, PropType, ref, toRefs } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 
 type Props = Readonly<
   {
@@ -94,7 +94,7 @@ type Emit = (
 ) => void;
 
 const useTodoItem = (props: Props, { emit }: { emit: Emit }) => {
-  const { item } = toRefs(props);
+  const { item } = props;
   const isTodoDeleted = ref(false);
   const isEditing = ref(false);
   const editInput = ref<HTMLInputElement>();
@@ -119,14 +119,14 @@ const useTodoItem = (props: Props, { emit }: { emit: Emit }) => {
   const onClickSave = () => {
     const newValue = editInput.value?.value;
 
-    if (item?.value && newValue) {
-      if (item.value.title === newValue) {
+    if (item && newValue) {
+      if (item.title === newValue) {
         isEditing.value = false;
         return;
       }
-      updateTodo(item.value.id, newValue);
+      updateTodo(item.id, newValue);
       isEditing.value = false;
-      item.value.title = newValue;
+      item.title = newValue;
     } else {
       console.error("异常错误");
       alert("待办项标题不可为空");
