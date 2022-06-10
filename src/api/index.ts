@@ -1,11 +1,17 @@
 import { TodoItem, ArchiveItem } from "@/type";
 
-const db: {
+const STORAGE_KEY = "vue3-todo-list-db";
+
+type DB = {
+  version: number;
   todoId: number;
   todo: TodoItem[];
   archiveId: number;
   archive: ArchiveItem[];
-} = {
+};
+
+const defaultDb: DB = {
+  version: 1,
   todoId: 2,
   todo: [
     { id: 1, title: "小郡肝串串 🍢", createTime: 1610182276778 },
@@ -22,8 +28,19 @@ const db: {
   ]
 };
 
+const storage = localStorage.getItem(STORAGE_KEY);
+let db = defaultDb;
+if (!storage) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultDb));
+} else {
+  db = JSON.parse(storage);
+}
+
 const proxy = (cb: () => void, timeout = 300) => {
-  setTimeout(cb, timeout);
+  setTimeout(() => {
+    cb();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+  }, timeout);
 };
 
 export const getTodo = () =>
